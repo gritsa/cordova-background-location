@@ -162,6 +162,52 @@
     
 }
 
+/**
+ * Fetches current stationaryLocation
+ */
+- (void) getLocation:(CDVInvokedUrlCommand *)command
+{   
+    NSString *uuid = [command.arguments objectAtIndex:0];
+
+    [self.commandDelegate runInBackground:^{
+        NSDictionary *location = [bgGeo getLocation:uuid];
+        CDVPluginResult *result;
+        if (location != nil) {
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:location];
+        } else {
+            NSString *error = [NSString stringWithFormat:@"Could not find location by uuid: %@", uuid];
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error];
+        }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        });
+    }];    
+}
+
+- (void) updateLocation:(CDVInvokedUrlCommand *)command
+{       
+    [self.commandDelegate runInBackground:^{
+        NSDictionary *params = [command.arguments objectAtIndex:0];
+        BOOL success = [bgGeo updateLocation:params];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus: (success) ? CDVCommandStatus_OK : CDVCommandStatus_ERROR];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        });
+    }];
+}
+
+- (void) destroyLocation:(CDVInvokedUrlCommand *)command
+{   
+    [self.commandDelegate runInBackground:^{
+        NSString *uuid = [command.arguments objectAtIndex:0];
+        BOOL success = [bgGeo destroyLocation:uuid];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus: (success) ? CDVCommandStatus_OK : CDVCommandStatus_ERROR];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        });
+    }];
+}
+
 - (void) clearDatabase:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{

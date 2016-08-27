@@ -126,6 +126,10 @@ bgGeo.on("location", onLocation, onLocationError);
 | [`stopWatchPosition`](#stopwatchpositionsuccessfn-failurefn-options) | `successFn`, `failureFn`, `{options}` | Halt `watchPosition` updates. |
 | [`changePace`](#changepaceenabled-successfn-failurefn) | `isMoving` | Initiate or cancel immediate background tracking. When set to true, the plugin will begin aggressively tracking the devices Geolocation, bypassing stationary monitoring. If you were making a "Jogging" application, this would be your [Start Workout] button to immediately begin GPS tracking. Send false to disable aggressive GPS monitoring and return to stationary-monitoring mode. |
 | [`getLocations`](#getlocationscallbackfn-failurefn) | `callbackFn` | Fetch all the locations currently stored in native plugin's SQLite database. Your callbackFn`` will receive an `Array` of locations in the 1st parameter |
+| [`getLocation`](#getlocationuuid-callbackfn-failurefn) | `uuid`, `callbackFn`, `failureFn` | Fetch a location by `uuid` stored in native plugin's SQLite database. Your `callbackFn` will receive the requested location `Object`  |
+| [`insertLocation`](#insertlocationlocation-callbackfn-failurefn) | `Object`, `callbackFn`, `failureFn` | Insert a location into native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.  |
+| [`updateLocation`](#updatelocationlocation-callbackfn-failurefn) | `Location`, `callbackFn`, `failureFn` | Update a location stored in native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.  |
+| [`destroyLocation`](#destroylocationuuid-callbackfn-failurefn) | `uuid`, `callbackFn`, `failureFn` | Destroy a location from the native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.  |
 | [`getCount`](#getcountcallbackfn-failurefn) | `callbackFn` | Fetches count of SQLite locations table `SELECT count(*) from locations` |
 | [`clearDatabase`](#cleardatabasecallbackfn-failurefn) | `callbackFn` | Delete all records in plugin's SQLite database |
 | [`sync`](#synccallbackfn-failurefn) | - | If the plugin is configured for HTTP with an `#url` and `#autoSync: false`, this method will initiate POSTing the locations currently stored in the native SQLite database to your configured `#url`|
@@ -1102,6 +1106,17 @@ Fetches count of SQLite locations table `SELECT count(*) from locations`.  The `
     });
 ```
 
+####`getLocation(uuid, callbackFn, failureFn)`
+Fetch a single location by `{String} uuid` stored in native plugin's SQLite database. Your `callbackFn` will receive the requested location `Object`
+
+```Javascript
+    bgGeo.getLocation("68F11417-6E55-446C-A556-E498E79C5233", function(location) {
+        console.log("- getLocation SUCCESS: ", location);
+    }, function(error) {
+        console.log("- getLocation FAILURE: ", error);
+    })
+```
+
 ####`insertLocation(params, callbackFn, failureFn)`
 Manually insert a location into the native plugin's SQLite database.  Your ```callbackFn`` will be executed if the operation was successful.  The inserted location's schema must match this plugin's published [Location Data Schema](wiki/Location-Data-Schema).  The plugin will have no problem inserting a location retrieved from the plugin itself.
 
@@ -1137,6 +1152,28 @@ Manually insert a location into the native plugin's SQLite database.  Your ```ca
     });
 ```
 
+####`updateLocation(location, callbackFn, failureFn)`
+Update a location stored in native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.
+
+```Javascript
+    location.extras = {"foo": "-------- updated location extras ---------"};
+    bgGeo.updateLocation(location, function() {
+        console.log('- Update location SUCCESS');
+    }, function(error) {
+        console.log('- UPdate location FAILURE: ', error);
+    })
+```
+
+####`destroyLocation(uuid, callbackFn, failureFn)`
+Destroy a location by `{String} uuid` from the native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.
+
+```Javascript
+    bgGeo.destroyLocation("68F11417-6E55-446C-A556-E498E79C5233", function() {
+        console.log("DESTROY location SUCCESS");
+    }, function(error) {
+        console.log("DESTROY location FAILURE");
+    })
+```
 
 ####`clearDatabase(callbackFn, failureFn)`
 Remove all records in plugin's SQLite database.

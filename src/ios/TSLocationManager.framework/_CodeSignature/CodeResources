@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/LocationDAO.h</key>
 		<data>
-		vK1YvglQmvMBZDB34H+0wrDbxgo=
+		rLLJlfyhFL93mB5CqLT11zDsSwM=
 		</data>
 		<key>Headers/LocationManager.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/TSLocationManager.h</key>
 		<data>
-		QdneHIwmFKvrS6Pp2Buv8fH7KOU=
+		ea9k+XlhAhq/N7Qw0t8Nvj9Lrlo=
 		</data>
 		<key>Headers/TSLogManager.h</key>
 		<data>
@@ -78,11 +78,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vK1YvglQmvMBZDB34H+0wrDbxgo=
+			rLLJlfyhFL93mB5CqLT11zDsSwM=
 			</data>
 			<key>hash2</key>
 			<data>
-			C8CR8jTb5shIU09t1ljiZjDUr+MyloxcRcsN4FbXPlE=
+			ekgqvVJxxaUVlUCy9780nG3jkqbMaIda9mLQyDnImhw=
 			</data>
 		</dict>
 		<key>Headers/LocationManager.h</key>
@@ -133,11 +133,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QdneHIwmFKvrS6Pp2Buv8fH7KOU=
+			ea9k+XlhAhq/N7Qw0t8Nvj9Lrlo=
 			</data>
 			<key>hash2</key>
 			<data>
-			tlWgo6Vonq+hJvxefoicjZQ16K62t9EQKhNnVU5o468=
+			E/H+a10a7IloFRL5pNrBQmxins453yuLnWQq/oMcgSU=
 			</data>
 		</dict>
 		<key>Headers/TSLogManager.h</key>

@@ -26,7 +26,6 @@
 - (void) addProviderChangeListener:(CDVInvokedUrlCommand*)command;
 - (void) addHeartbeatListener:(CDVInvokedUrlCommand*)command;
 - (void) getStationaryLocation:(CDVInvokedUrlCommand *)command;
-- (void) getLocations:(CDVInvokedUrlCommand *)command;
 - (void) sync:(CDVInvokedUrlCommand *)command;
 - (void) addLocationListener:(CDVInvokedUrlCommand *)command;
 - (void) addHttpListener:(CDVInvokedUrlCommand *)command;
@@ -41,9 +40,15 @@
 - (void) getCurrentPosition:(CDVInvokedUrlCommand *)command;
 - (void) watchPosition:(CDVInvokedUrlCommand *)command;
 - (void) stopWatchPosition:(CDVInvokedUrlCommand *)command;
+
+- (void) getLocations:(CDVInvokedUrlCommand *)command;
 - (void) clearDatabase:(CDVInvokedUrlCommand *) command;
+- (void) getLocation:(CDVInvokedUrlCommand *)command;
 - (void) insertLocation:(CDVInvokedUrlCommand *) command;
+- (void) updateLocation:(CDVInvokedUrlCommand *) command;
+- (void) destroyLocation:(CDVInvokedUrlCommand *) command;
 - (void) getCount:(CDVInvokedUrlCommand *) command;
+
 - (void) getLog:(CDVInvokedUrlCommand *) command;
 - (void) emailLog:(CDVInvokedUrlCommand*) command;
 - (void) playSound:(CDVInvokedUrlCommand *)command;

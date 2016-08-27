@@ -59,6 +59,7 @@ typedef enum tsLocationError : NSInteger {
 - (void) stopSchedule;
 - (NSArray*) sync;
 - (NSArray*) getLocations;
+- (NSDictionary*) getLocation:(NSString*)uuid;
 - (UIBackgroundTaskIdentifier) createBackgroundTask;
 - (void) stopBackgroundTask:(UIBackgroundTaskIdentifier)taskId;
 - (void) error:(UIBackgroundTaskIdentifier)taskId message:(NSString*)message;
@@ -81,6 +82,8 @@ typedef enum tsLocationError : NSInteger {
 - (void) notify:(NSString*)message;
 - (BOOL) clearDatabase;
 - (BOOL) insertLocation:(NSDictionary*)params;
+- (BOOL) updateLocation:(NSDictionary*)params;
+- (BOOL) destroyLocation:(NSString*)uuid;
 - (int) getCount;
 - (NSString*) getLog;
 - (void) emailLog:(NSString*)to;

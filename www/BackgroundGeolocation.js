@@ -295,6 +295,36 @@ module.exports = {
             'insertLocation',
             [location]);
     },
+    getLocation: function(uuid, success, failure) {
+        if (typeof(uuid) !== 'string')  {
+            throw "BackgroundGeolocation#getLocation must be provided with a uuid to query";
+        }
+        exec(success || function() {},
+            failure || function() {},
+            'BackgroundGeolocation',
+            'getLocation',
+            [uuid]);
+    },
+    updateLocation: function(location, success, failure) {
+        if (typeof(location) !== 'object')  {
+            throw "BackgroundGeolocation#updateLocation must be provided with a location Object";
+        }
+        exec(success || function() {},
+            failure || function() {},
+            'BackgroundGeolocation',
+            'updateLocation',
+            [location]);
+    },
+    destroyLocation: function(uuid, success, failure) {
+        if (typeof(uuid) !== 'string')  {
+            throw "BackgroundGeolocation#destroyLocation must be provided with a uuid to query";
+        }
+        exec(success || function() {},
+            failure || function() {},
+            'BackgroundGeolocation',
+            'destroyLocation',
+            [uuid]);
+    },
     /**
     * Signal native plugin to sync locations queue to HTTP
     */

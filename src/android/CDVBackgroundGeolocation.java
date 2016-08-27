@@ -184,6 +184,9 @@ public class CDVBackgroundGeolocation extends CordovaPlugin {
         } else if (BackgroundGeolocation.ACTION_GET_LOCATIONS.equalsIgnoreCase(action)) {
             result = true;
             getLocations(callbackContext);
+        } else if (BackgroundGeolocation.ACTION_GET_LOCATION.equalsIgnoreCase(action)) {
+            result = true;
+            getLocation(data.getString(0), callbackContext);
         } else if (BackgroundGeolocation.ACTION_SYNC.equalsIgnoreCase(action)) {
             result = true;
             sync(callbackContext);
@@ -255,6 +258,12 @@ public class CDVBackgroundGeolocation extends CordovaPlugin {
         } else if (BackgroundGeolocation.ACTION_INSERT_LOCATION.equalsIgnoreCase(action)) {
             result = true;
             insertLocation(data.getJSONObject(0), callbackContext);
+        } else if (BackgroundGeolocation.ACTION_UPDATE_LOCATION.equalsIgnoreCase(action)) {
+            result = true;
+            updateLocation(data.getJSONObject(0), callbackContext);
+        } else if (BackgroundGeolocation.ACTION_DESTROY_LOCATION.equalsIgnoreCase(action)) {
+            result = true;
+            destroyLocation(data.getString(0), callbackContext);
         } else if (BackgroundGeolocation.ACTION_GET_COUNT.equalsIgnoreCase(action)) {
             result = true;
             getCount(callbackContext);
@@ -368,6 +377,64 @@ public class CDVBackgroundGeolocation extends CordovaPlugin {
             }
         };
         getAdapter().getLocations(callback);
+    }
+
+    private void getLocation(final String uuid, final CallbackContext callbackContext) {
+        TSCallback callback = new TSCallback() {
+            public void success(Object json) {
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, (JSONObject) json));
+            }
+            public void error(Object error) {
+                callbackContext.error((String) error);
+            }
+        };
+        getAdapter().getLocation(uuid, callback);
+    }
+
+    private class InsertLocationCallback implements TSCallback {
+        private CallbackContext callbackContext;
+        public InsertLocationCallback(CallbackContext _callbackContext) {
+            callbackContext = _callbackContext;
+        }
+        @Override
+        public void success(Object uuid) {
+            callbackContext.success((String) uuid);
+        }
+        public void error(Object error) {
+            callbackContext.error((String)error);
+        }
+    }
+    private void insertLocation(JSONObject params, CallbackContext callbackContext) {
+        getAdapter().insertLocation(params, new InsertLocationCallback(callbackContext));
+    }
+
+    private class UpdateLocationCallback implements TSCallback {
+        private CallbackContext callbackContext;
+        public UpdateLocationCallback(CallbackContext _callbackContext) {
+            callbackContext = _callbackContext;
+        }
+        @Override
+        public void success(Object success) {
+            callbackContext.success();
+        }
+        public void error(Object error) {
+            callbackContext.error((String)error);
+        }
+    }
+    private void updateLocation(JSONObject json, CallbackContext callbackContext) {
+        getAdapter().updateLocation(json, new UpdateLocationCallback(callbackContext));
+    }
+    
+    private void destroyLocation(final String uuid, final CallbackContext callbackContext) {
+        TSCallback callback = new TSCallback() {
+            public void success(Object success) {
+                callbackContext.success();
+            }
+            public void error(Object error) {
+                callbackContext.error((String) error);
+            }
+        };
+        getAdapter().destroyLocation(uuid, callback);
     }
 
     private void getCount(final CallbackContext callbackContext) {
@@ -670,23 +737,6 @@ public class CDVBackgroundGeolocation extends CordovaPlugin {
             }
         };
         getAdapter().removeGeofences(callback);
-    }
-
-    private class InsertLocationCallback implements TSCallback {
-        private CallbackContext callbackContext;
-        public InsertLocationCallback(CallbackContext _callbackContext) {
-            callbackContext = _callbackContext;
-        }
-        @Override
-        public void success(Object uuid) {
-            callbackContext.success((String) uuid);
-        }
-        public void error(Object error) {
-            callbackContext.error((String)error);
-        }
-    }
-    private void insertLocation(JSONObject params, CallbackContext callbackContext) {
-        getAdapter().insertLocation(params, new InsertLocationCallback(callbackContext));
     }
 
     private void setConfig(final JSONObject config, final CallbackContext callbackContext) {

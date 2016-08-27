@@ -22,6 +22,7 @@ typedef struct sqlite3 sqlite3;
 - (BOOL) clear;
 - (BOOL) purge:(NSInteger)maxDaysToPersist;
 - (BOOL) destroy:(NSNumber*)id;
+
 - (BOOL) destroyAll:(NSArray*)records;
 - (BOOL) unlock:(NSNumber*)id;
 - (BOOL) unlockAll:(NSArray*)records;
@@ -29,5 +30,9 @@ typedef struct sqlite3 sqlite3;
 - (NSArray*) all;
 - (NSArray*) allWithLocking:(NSInteger)limit;
 - (NSDictionary*) first;
+
+- (NSDictionary*) find:(NSString*)uuid;
+- (BOOL) update:(NSDictionary*)data;
+- (BOOL) destroyByUuid:(NSString*)uuid;
 
 @end
