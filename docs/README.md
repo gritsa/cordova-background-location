@@ -1117,7 +1117,7 @@ Fetch a single location by `{String} uuid` stored in native plugin's SQLite data
     })
 ```
 
-####`insertLocation(params, callbackFn, failureFn)`
+####`insertLocation(location, callbackFn, failureFn)`
 Manually insert a location into the native plugin's SQLite database.  Your ```callbackFn`` will be executed if the operation was successful.  The inserted location's schema must match this plugin's published [Location Data Schema](wiki/Location-Data-Schema).  The plugin will have no problem inserting a location retrieved from the plugin itself.
 
 ######@param {Object} params.  The location params/object matching the [Location Data Schema](wiki/Location-Data-Schema).
