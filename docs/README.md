@@ -1118,13 +1118,12 @@ Fetch a single location by `{String} uuid` stored in native plugin's SQLite data
 ```
 
 ####`insertLocation(location, callbackFn, failureFn)`
-Manually insert a location into the native plugin's SQLite database.  Your ```callbackFn`` will be executed if the operation was successful.  The inserted location's schema must match this plugin's published [Location Data Schema](wiki/Location-Data-Schema).  The plugin will have no problem inserting a location retrieved from the plugin itself.
+Manually insert a location into the native plugin's SQLite database.  Your `callbackFn` will be executed if the operation was successful.  The inserted location's `coords` schema must match this plugin's published [Location Data Schema](wiki/Location-Data-Schema).  The plugin will have no problem inserting a location retrieved from the plugin itself.  The plugin will automatically generate a new **`uuid`** for the inserted location.  If you don't provide a **`timestamp`**, the plugin will automatically generate one with the current time.
 
 ######@param {Object} params.  The location params/object matching the [Location Data Schema](wiki/Location-Data-Schema).
 
 ```Javascript
     bgGeo.insertLocation({
-		"uuid": "f8424926-ff3e-46f3-bd48-2ec788c9e761",	// <-- required
 		"coords": {										// <-- required
 			"latitude": 45.5192746,
 			"longitude": -73.616909,
@@ -1133,29 +1132,19 @@ Manually insert a location into the native plugin's SQLite database.  Your ```ca
 			"heading": 0,
 			"altitude": 0
 		},
-		"timestamp": "2016-02-10T22:25:54.905Z"			// <-- required
+		"timestamp": "2016-02-10T22:25:54.905Z"			// <-- optional
     }, function() {
         console.log('- Inserted location success');
     }, function(error) {
     	console.warn('- Failed to insert location: ', error);
-    });
-
-    // insertLocation can easily consume any location which it returned.  Note that #getCurrentPosition ALWAYS persists so this example
-    // will manually persist a 2nd version of the same location.  The purpose here is to show that the plugin can consume any location object which it generated.
-    bgGeo.getCurrentPosition(function(location, taskId) {
-    	location.extras = {foo: 'bar'};	// <-- add some arbitrary extras-data
-
-    	// Insert it.
-    	bgGeo.insertLocation(location, function() {
-    		bgGeo.finish(taskId);
-    	});
-    });
+    });    
 ```
 
 ####`updateLocation(location, callbackFn, failureFn)`
 Update a location stored in native plugin's SQLite database. Your `callbackFn` will be executed if the action was successful, otherwise `failureFn` will execute.
 
 ```Javascript
+    // Add some new extras to some location.
     location.extras = {"foo": "-------- updated location extras ---------"};
     bgGeo.updateLocation(location, function() {
         console.log('- Update location SUCCESS');
