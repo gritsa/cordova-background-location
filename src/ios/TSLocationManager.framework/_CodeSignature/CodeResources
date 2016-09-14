@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/BackgroundTaskManager.h</key>
+		<data>
+		kuNXe8UBM0FXmuL5KZ39qqkY/ns=
+		</data>
 		<key>Headers/LocationAuthorization.h</key>
 		<data>
 		rUIQKyZ2raGpCKmXtYyoT7v+cmw=
@@ -14,7 +18,7 @@
 		</data>
 		<key>Headers/LocationManager.h</key>
 		<data>
-		X/n+oG90T66orAS2knZwkgX0D+U=
+		Xz9285SbzGjS214f7hjSi4kBNTc=
 		</data>
 		<key>Headers/SOMotionDetector.h</key>
 		<data>
@@ -22,7 +26,7 @@
 		</data>
 		<key>Headers/Settings.h</key>
 		<data>
-		qO6hKQSm1ay52uX0LSI8RuKxjTo=
+		kw1BozBeaXWT7mAAgEUlCY4aRrc=
 		</data>
 		<key>Headers/TSHttpService.h</key>
 		<data>
@@ -30,7 +34,7 @@
 		</data>
 		<key>Headers/TSLocationManager.h</key>
 		<data>
-		ZTVXWyH8S9Gj6Ck+NDL4xVQAU5I=
+		ZIGHx3GIZM6cCn8PBQlGPc0cMJk=
 		</data>
 		<key>Headers/TSLogManager.h</key>
 		<data>
@@ -63,6 +67,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/BackgroundTaskManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kuNXe8UBM0FXmuL5KZ39qqkY/ns=
+			</data>
+			<key>hash2</key>
+			<data>
+			wQi80UeA/wpHNEDeWBKaJLWMhfYuZsFbH9g8B2ILqc4=
+			</data>
+		</dict>
 		<key>Headers/LocationAuthorization.h</key>
 		<dict>
 			<key>hash</key>
@@ -89,11 +104,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			X/n+oG90T66orAS2knZwkgX0D+U=
+			Xz9285SbzGjS214f7hjSi4kBNTc=
 			</data>
 			<key>hash2</key>
 			<data>
-			fOMgq1RCMk6CdgkzWktGokQz6IrkAt3K9sFERIBbojI=
+			GGAhrpq8B3dUzI/2zENx2dRCRmiYvoWMIOpEufCA7RY=
 			</data>
 		</dict>
 		<key>Headers/SOMotionDetector.h</key>
@@ -111,11 +126,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qO6hKQSm1ay52uX0LSI8RuKxjTo=
+			kw1BozBeaXWT7mAAgEUlCY4aRrc=
 			</data>
 			<key>hash2</key>
 			<data>
-			q660Js1fTLE8DUmrnlLlyAjuWPp/CuxU+r1mf+//x3I=
+			1usybOB3c0+zo4bocNfFZ5JBzdGfs+n25wuPWhtqN94=
 			</data>
 		</dict>
 		<key>Headers/TSHttpService.h</key>
@@ -133,11 +148,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZTVXWyH8S9Gj6Ck+NDL4xVQAU5I=
+			ZIGHx3GIZM6cCn8PBQlGPc0cMJk=
 			</data>
 			<key>hash2</key>
 			<data>
-			+31AhXb3G5emzplrLtY/NDofIbVz7GWy5zqxzhK0hKE=
+			kFkIp9/hJzMLelH+7IGkeDI8byuvR+A+GqdYu745+3I=
 			</data>
 		</dict>
 		<key>Headers/TSLogManager.h</key>

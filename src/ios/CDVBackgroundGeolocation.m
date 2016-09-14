@@ -389,8 +389,6 @@
             [self.commandDelegate sendPluginResult:result callbackId:callbackId];
         }
     }
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void) playSound:(CDVInvokedUrlCommand*)command
@@ -489,52 +487,45 @@
 /**
  * location handler from BackgroundGeolocation
  */
--(void (^)(CLLocation *location, enum tsLocationType, BOOL isMoving)) createLocationChangedHandler {
-    return ^(CLLocation *location, enum tsLocationType type, BOOL isMoving) {
-                
-        NSDictionary *locationData = [bgGeo locationToDictionary:location type:type];
+-(void (^)(NSDictionary *locationData, enum tsLocationType, BOOL isMoving)) createLocationChangedHandler {
+    return ^(NSDictionary *locationData, enum tsLocationType type, BOOL isMoving) {
+        NSDictionary *params = @{@"location": locationData, @"taskId": @([bgGeo createBackgroundTask])};
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
+        [result setKeepCallbackAsBool:YES];
         
-        [self.commandDelegate runInBackground:^{
-            NSDictionary *params = @{@"location": locationData, @"taskId": @([bgGeo createBackgroundTask])};
-            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
-            [result setKeepCallbackAsBool:YES];
-            
-            for (NSString *callbackId in locationListeners) {
-                [self.commandDelegate sendPluginResult:result callbackId:callbackId];
-            }
-        }];
+        for (NSString *callbackId in locationListeners) {
+            [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+        }
         
         if (type != TS_LOCATION_TYPE_SAMPLE && [currentPositionListeners count]) {
-            for (NSString *callbackId in currentPositionListeners) {
-                NSDictionary *params = @{
-                                         @"location": locationData,
-                                         @"taskId": @([bgGeo createBackgroundTask])
-                                         };
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
-                [result setKeepCallbackAsBool:NO];
-                [self.commandDelegate runInBackground:^{
+            @synchronized(currentPositionListeners) {
+                if ([currentPositionListeners count]) {
+                    NSString *callbackId = [currentPositionListeners firstObject];
+                    NSDictionary *params = @{@"location": locationData, @"taskId": @([bgGeo createBackgroundTask])};
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
+                    [result setKeepCallbackAsBool:NO];
                     [self.commandDelegate sendPluginResult:result callbackId:callbackId];
-                }];       
+                    [currentPositionListeners removeObject:callbackId];
+                }
             }
-            [currentPositionListeners removeAllObjects];
         } else if (type == TS_LOCATION_TYPE_WATCH) {
-            for (NSString *callbackId in watchPositionListeners) {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationData];
-                [result setKeepCallbackAsBool:YES];
-                [self.commandDelegate runInBackground:^{
+            @synchronized(watchPositionListeners) {
+                for (NSString *callbackId in watchPositionListeners) {
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationData];
+                    [result setKeepCallbackAsBool:YES];
                     [self.commandDelegate sendPluginResult:result callbackId:callbackId];
-                }];
+                }
             }
         }
     };
 }
 
--(void (^)(CLLocation *location, BOOL moving)) createMotionChangedHandler {
-    return ^(CLLocation *location, BOOL moving) {
+-(void (^)(NSDictionary *locationData, BOOL moving)) createMotionChangedHandler {
+    return ^(NSDictionary *locationData, BOOL moving) {
         if (![motionChangeListeners count]) {
             return;
         }
-        NSDictionary *locationData  = [bgGeo locationToDictionary:location];
+        //NSDictionary *locationData  = [bgGeo locationToDictionary:location];
 
         for (NSString *callbackId in motionChangeListeners) {
             NSDictionary *params = @{
@@ -583,8 +574,8 @@
     };
 }
 
--(void (^)(CLCircularRegion *region, CLLocation *location, NSString *action)) createGeofenceHandler {
-    return ^(CLCircularRegion *region, CLLocation *location, NSString *action) {
+-(void (^)(CLCircularRegion *region, NSDictionary *locationData, NSString *action)) createGeofenceHandler {
+    return ^(CLCircularRegion *region, NSDictionary *locationData, NSString *action) {
         if (![geofenceListeners count]) {
             return;
         }
@@ -592,7 +583,7 @@
             NSDictionary *params = @{
                 @"identifier": region.identifier,
                 @"action": action,
-                @"location": [bgGeo locationToDictionary:location],
+                @"location": locationData,
                 @"taskId": @([bgGeo createBackgroundTask])
             };
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:params];
@@ -673,10 +664,13 @@
                 }
                 [currentPositionListeners removeAllObjects];
             }
-
+            
             [result setKeepCallbackAsBool:YES];
             
             for (NSString *callbackId in locationListeners) {
+                [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+            }
+            for (NSString *callbackId in watchPositionListeners) {
                 [self.commandDelegate sendPluginResult:result callbackId:callbackId];
             }
         }

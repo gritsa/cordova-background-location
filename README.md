@@ -57,7 +57,7 @@ If building from your local machine (as you should be), ensure you have the foll
 ![](https://camo.githubusercontent.com/e0394b09555896127b96e70e2a62dedc932e3236/68747470733a2f2f7777772e64726f70626f782e636f6d2f732f356c37316d766333377971726271682f53637265656e73686f74253230323031352d31312d313225323030362e33342e30362e706e673f646c3d31)
 
 ## Documentation
-- [API Documentation](docs)
+- [API Documentation](./docs/README.md)
 - [Location Data Schema](../../wiki/Location-Data-Schema)
 - [Debugging Sounds](../../wiki/Debug-Sounds)
 - [Geofence Features](../../wiki/Geofence-Features)
