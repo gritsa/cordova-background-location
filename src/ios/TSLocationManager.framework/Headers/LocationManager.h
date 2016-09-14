@@ -25,7 +25,7 @@
 @property (copy) void (^locationChangedBlock) (LocationManager* manager, CLLocation* location, BOOL isSample);
 @property (copy) void (^errorBlock) (LocationManager* manager, NSError* error);
 
--(void)watchPosition:(NSTimeInterval)interval;
+-(void)watchPosition:(NSDictionary*)options;
 -(void)stopWatchPosition;
 -(void)startUpdatingLocation;
 -(void)startUpdatingLocation:(NSInteger)samples;
