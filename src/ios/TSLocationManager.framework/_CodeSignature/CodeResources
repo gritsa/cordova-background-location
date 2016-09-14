@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/LocationManager.h</key>
 		<data>
-		bhKLFZg/wsbGjfG2inS1xlpX8So=
+		X/n+oG90T66orAS2knZwkgX0D+U=
 		</data>
 		<key>Headers/SOMotionDetector.h</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/Settings.h</key>
 		<data>
-		E7Ec3pKl/sBKSWwWm/9pmThhCUI=
+		qO6hKQSm1ay52uX0LSI8RuKxjTo=
 		</data>
 		<key>Headers/TSHttpService.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/TSLocationManager.h</key>
 		<data>
-		QdneHIwmFKvrS6Pp2Buv8fH7KOU=
+		ZTVXWyH8S9Gj6Ck+NDL4xVQAU5I=
 		</data>
 		<key>Headers/TSLogManager.h</key>
 		<data>
@@ -89,11 +89,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bhKLFZg/wsbGjfG2inS1xlpX8So=
+			X/n+oG90T66orAS2knZwkgX0D+U=
 			</data>
 			<key>hash2</key>
 			<data>
-			9Rd+boC2idk7wQ7xSKKXJTEqyqp44pBUcRRaxnSEuF0=
+			fOMgq1RCMk6CdgkzWktGokQz6IrkAt3K9sFERIBbojI=
 			</data>
 		</dict>
 		<key>Headers/SOMotionDetector.h</key>
@@ -111,11 +111,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			E7Ec3pKl/sBKSWwWm/9pmThhCUI=
+			qO6hKQSm1ay52uX0LSI8RuKxjTo=
 			</data>
 			<key>hash2</key>
 			<data>
-			jyxmK7IQyqF7j79JZMbZW/H3dhAB4UQOwbg+c7tyOd0=
+			q660Js1fTLE8DUmrnlLlyAjuWPp/CuxU+r1mf+//x3I=
 			</data>
 		</dict>
 		<key>Headers/TSHttpService.h</key>
@@ -133,11 +133,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QdneHIwmFKvrS6Pp2Buv8fH7KOU=
+			ZTVXWyH8S9Gj6Ck+NDL4xVQAU5I=
 			</data>
 			<key>hash2</key>
 			<data>
-			tlWgo6Vonq+hJvxefoicjZQ16K62t9EQKhNnVU5o468=
+			+31AhXb3G5emzplrLtY/NDofIbVz7GWy5zqxzhK0hKE=
 			</data>
 		</dict>
 		<key>Headers/TSLogManager.h</key>

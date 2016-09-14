@@ -15,6 +15,7 @@
     NSMutableArray *geofenceListeners;
     NSMutableArray *motionChangeListeners;
     NSMutableArray *currentPositionListeners;
+    NSMutableArray *watchPositionListeners;
     NSMutableArray *httpListeners;
     NSMutableArray *heartbeatListeners;
     NSMutableArray *scheduleListeners;
@@ -362,16 +363,33 @@
 
 - (void) watchPosition:(CDVInvokedUrlCommand*)command
 {
-    //NSDictionary *options  = [command.arguments objectAtIndex:0];
-    NSLog(@"watchPosition is not yet implemented for ios");
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"watchPosition is not yet implemented for ios"];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    NSDictionary *options  = [command.arguments objectAtIndex:0];
+
+    if (watchPositionListeners == nil) {
+        watchPositionListeners = [[NSMutableArray alloc] init];
+    }
+    [watchPositionListeners addObject:command.callbackId];
+
+    [self.commandDelegate runInBackground:^{
+        [bgGeo watchPosition:options];
+    }];
+
+    //CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"watchPosition is not yet implemented for ios"];
+    //[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 - (void) stopWatchPosition:(CDVInvokedUrlCommand*)command
 {
-    //NSDictionary *options  = [command.arguments objectAtIndex:0];
-    NSLog(@"watchPosition is not yet implemented for ios");
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"watchPosition is not yet implemented for ios"];
+    [self.commandDelegate runInBackground:^{
+        [bgGeo stopWatchPosition];
+    }];
+    if (watchPositionListeners) {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:-1];
+        [result setKeepCallbackAsBool:NO];
+        for (NSString *callbackId in watchPositionListeners) {
+            [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+        }
+    }
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
@@ -499,6 +517,14 @@
                 }];       
             }
             [currentPositionListeners removeAllObjects];
+        } else if (type == TS_LOCATION_TYPE_WATCH) {
+            for (NSString *callbackId in watchPositionListeners) {
+                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationData];
+                [result setKeepCallbackAsBool:YES];
+                [self.commandDelegate runInBackground:^{
+                    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+                }];
+            }
         }
     };
 }

@@ -22,7 +22,8 @@
 typedef enum tsLocationType : NSInteger {
     TS_LOCATION_TYPE_MOTIONCHANGE   = 0,
     TS_LOCATION_TYPE_CURRENT        = 1,
-    TS_LOCATION_TYPE_SAMPLE         = 2
+    TS_LOCATION_TYPE_SAMPLE         = 2,
+    TS_LOCATION_TYPE_WATCH          = 4
 } tsLocationtype;
 
 // Error codes
@@ -77,6 +78,8 @@ typedef enum tsLocationError : NSInteger {
 - (BOOL) removeGeofences;
 - (NSArray*) getGeofences;
 - (void) updateCurrentPosition:(NSDictionary*)options;
+- (void) watchPosition:(NSDictionary*)options;
+- (void) stopWatchPosition;
 - (void) playSound:(SystemSoundID)soundId;
 - (void) notify:(NSString*)message;
 - (BOOL) clearDatabase;
