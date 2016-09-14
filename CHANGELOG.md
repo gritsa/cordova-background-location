@@ -1,8 +1,15 @@
 
 # Change Log
+
 ## [Unreleased]
+- [Fixed] Issue where iOS crashes when configured with null url.
+
+## [2.0.9] - 2016-08-29
 - [Fixed] `removeGeofences` was removing stationary-region.  This would prevent stationary-exit if called while device is in stationary-mode
 - [Fixed] Issue #830 Android pukes when it receives an empty schedule `[]`.
+- [Fixed] Issue #824.  Android when configured with `batchSync: true, autoSync: true` was failing because the plugin automatically tweaked `autoSync: false` but failed to reset it to the configured value.  This behaviour was obsolete and has been removed.
+- [Added] Add new config `@param {Integer} autoSyncThreshold [0]`.  Allows you to specify a minimum number of persisted records to trigger an auto-sync action.
+- [Fixed] Issue #837.  Android `SimpleDateFormat` used for rendering location timestamp was not being used in a thread-safe manner, resulting in corrupted timestamps for some
 
 ## [2.0.8] - 2016-08-17
 - [Fixed] Issue #804, null pointer exeception on mGoogleApiClient

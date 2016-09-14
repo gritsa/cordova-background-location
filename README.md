@@ -96,9 +96,12 @@ function onDeviceReady() {
     var failureFn = function(error) {
         console.log('BackgroundGeoLocation error', error);
     }
-
-    // BackgroundGeoLocation is highly configurable.
-    bgGeo.configure(callbackFn, failureFn, {
+    
+    // Listen to location event
+    bgGeo.on('location', callbackFn, failureFn);
+    
+    // Configure the plugin
+    bgGeo.configure({
         // Geolocation config
         desiredAccuracy: 0,
         stationaryRadius: 50,
