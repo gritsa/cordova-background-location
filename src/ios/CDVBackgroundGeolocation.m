@@ -496,7 +496,15 @@
             [self.commandDelegate sendPluginResult:result callbackId:callbackId];
         }
         
-        if (type != TS_LOCATION_TYPE_SAMPLE && [currentPositionListeners count]) {
+        if (type == TS_LOCATION_TYPE_WATCH) {
+            @synchronized(watchPositionListeners) {
+                for (NSString *callbackId in watchPositionListeners) {
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationData];
+                    [result setKeepCallbackAsBool:YES];
+                    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+                }
+            }
+        } else if (type != TS_LOCATION_TYPE_SAMPLE && [currentPositionListeners count]) {
             @synchronized(currentPositionListeners) {
                 if ([currentPositionListeners count]) {
                     NSString *callbackId = [currentPositionListeners firstObject];
@@ -505,14 +513,6 @@
                     [result setKeepCallbackAsBool:NO];
                     [self.commandDelegate sendPluginResult:result callbackId:callbackId];
                     [currentPositionListeners removeObject:callbackId];
-                }
-            }
-        } else if (type == TS_LOCATION_TYPE_WATCH) {
-            @synchronized(watchPositionListeners) {
-                for (NSString *callbackId in watchPositionListeners) {
-                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationData];
-                    [result setKeepCallbackAsBool:YES];
-                    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
                 }
             }
         }
