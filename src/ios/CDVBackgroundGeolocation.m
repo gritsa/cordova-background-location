@@ -160,7 +160,6 @@
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         });
     }];
-    
 }
 
 - (void) clearDatabase:(CDVInvokedUrlCommand*)command
@@ -595,13 +594,13 @@
     };
 }
 
--(void (^)(int shakeCount, NSString* motionType, CLLocation *location)) createHeartbeatHandler {
-    return ^(int shakeCount, NSString* motionType, CLLocation *location) {
+-(void (^)(int shakeCount, NSString* motionType, NSDictionary *locationData)) createHeartbeatHandler {
+    return ^(int shakeCount, NSString* motionType, NSDictionary *locationData) {
 
         NSDictionary *params = @{
             @"shakes": @(shakeCount),
             @"motionType": motionType,
-            @"location": [bgGeo locationToDictionary:location]
+            @"location": locationData
         };
 
         for (NSString *callbackId in heartbeatListeners) {
